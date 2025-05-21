@@ -80,10 +80,10 @@ const registerApi = async (req, res) => {
     return res.status(500).json({ success: false, message: "Lỗi server" });
   }
 };
+
 // API SẢN PHẨM
 const productUploadApi = async (req, res) => {
   try {
-    // multer đã xử lý file, req.file và req.body
     const { tenHang, DonGia } = req.body;
     const file = req.file;
 
@@ -105,7 +105,6 @@ const productUploadApi = async (req, res) => {
       [tenHang, DonGia, imageUrl]
     );
 
-    // Trả về dữ liệu sản phẩm vừa tạo (có thể thêm id insertId)
     const newProduct = {
       id: result.insertId,
       tenHang,
@@ -131,6 +130,7 @@ const getProductApi = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 // API LẤY THỂ LOẠI
 const getTheLoaiApi = async (req, res) => {
   try {
@@ -140,20 +140,21 @@ const getTheLoaiApi = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-// APi Search
-const Search = async (req, res) => {
+// API lấy kí tự
+const search = async (req, res) => {
   try {
-    const [keyword] = req.query;
-    const searchKeyword = `%${keyword}%`;
+    const keyword = req.query.q || "";
+    const search = `%${keyword}%`;
     const [rows] = await connection.query(
-      `Select * from hanghoa where tenHang like ?`,
-      [searchKeyword]
+      "SELECT tenHang FROM hanghoa WHERE tenHang LIKE ?",
+      [search]
     );
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 module.exports = {
   getApi,
   loginApi,
@@ -161,5 +162,5 @@ module.exports = {
   productUploadApi,
   getProductApi,
   getTheLoaiApi,
-  Search,
+  search
 };
