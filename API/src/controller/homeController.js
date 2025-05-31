@@ -1,3 +1,4 @@
+const { name } = require("ejs");
 const connection = require("../config/db_quanao.js");
 const upload = require("../middlewares/upload.js");
 
@@ -142,11 +143,10 @@ const getTheLoaiApi = async (req, res) => {
 // APi Search
 const Search = async (req, res) => {
   try {
-    const keyword = req.query.keyword;
+    const [keyword] = req.query;
     const searchKeyword = `%${keyword}%`;
-
     const [rows] = await connection.query(
-      `SELECT * FROM hanghoa WHERE tenHang LIKE ?`,
+      `Select * from hanghoa where tenHang like ?`,
       [searchKeyword]
     );
     res.json(rows);
