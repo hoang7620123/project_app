@@ -62,6 +62,7 @@ public class login extends AppCompatActivity {
                             boolean success = response.getBoolean("success");
                             if (success) {
                                 String userEmail = response.getJSONObject("user").getString("email");
+
                                 Toast.makeText(this, "Đăng nhập thành công: " + userEmail, Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(login.this, MainActivity.class);
                                 startActivity(intent);

@@ -55,6 +55,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/buy"
+            android:background="@android:color/transparent"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
